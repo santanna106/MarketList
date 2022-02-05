@@ -2,13 +2,18 @@ import React from 'react';
 
 import {
   Container,
-  Title
+  HighLightCards,
+  Title,
+  Header,
+  Contents
 } from './styles';
 
 export function Home(){
   return (
     <Container>
-        <Title>Home</Title>
+      <Header></Header>
+      <Contents></Contents>
+        
     </Container>
   );
 }

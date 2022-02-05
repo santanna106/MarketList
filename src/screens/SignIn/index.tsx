@@ -4,7 +4,11 @@ import {
   Container,
   Title,
   Button,
-  ButtonText
+  ButtonText,
+  Header,
+  HeaderCurve,
+  HeaderTitle,
+  Contents
 } from './styles';
 
 import {useAuth} from '../../hooks/auth';
@@ -20,10 +24,19 @@ export function SignIn(){
 
   return (
     <Container>
-      <Title>SignIn</Title>
-      <Button onPress={handleSignIn}>
-        <ButtonText>Login</ButtonText>
-      </Button>
+      <Header>
+        <HeaderTitle>
+          <Title>My Market List</Title>
+        </HeaderTitle>
+        <HeaderCurve/>
+      </Header>
+      <Contents>
+        <Title>SignIn</Title>
+        <Button onPress={handleSignIn}>
+          <ButtonText>Login</ButtonText>
+        </Button>
+      </Contents>
+     
     </Container>
   );
 }
