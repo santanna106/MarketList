@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
 import {
   Container,
@@ -8,14 +9,18 @@ import {
   Header,
   HeaderCurve,
   HeaderTitle,
-  Contents
+  Contents,
+  PurchasesTypeBox,
+  PurchasesCards
 } from './styles';
 
 import {useAuth} from '../../hooks/auth';
+import { Card } from '../components/Card';
+import { ScrollView } from 'react-native';
 
 
 export function SignIn(){
-  
+  const theme = useTheme();
   const { signInWithGoogle } = useAuth();
 
   function handleSignIn(){
@@ -31,10 +36,13 @@ export function SignIn(){
         <HeaderCurve/>
       </Header>
       <Contents>
-        <Title>SignIn</Title>
-        <Button onPress={handleSignIn}>
-          <ButtonText>Login</ButtonText>
-        </Button>
+        <PurchasesTypeBox>
+          <PurchasesCards>
+            <Card title="Todas" background={theme.colors.secundary} iconName="fact-check" />
+            <Card title="Urgentes" background={theme.colors.attention} iconName="warning" />
+            <Card title="Realizadas" background={theme.colors.sucess} iconName="check-box" />
+          </PurchasesCards>
+        </PurchasesTypeBox>
       </Contents>
      
     </Container>

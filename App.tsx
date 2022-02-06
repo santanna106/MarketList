@@ -10,6 +10,7 @@ import {Routes} from './src/routes';
 import {
   useFonts,
   Poppins_400Regular,
+  Poppins_600SemiBold,
   Poppins_500Medium,
   Poppins_700Bold
 
@@ -23,6 +24,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
+    Poppins_600SemiBold,
     Poppins_700Bold
   });
 

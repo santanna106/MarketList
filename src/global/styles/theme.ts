@@ -18,6 +18,7 @@ export default  {
 
     fonts: {
         regular:'Poppins_400Regular',
+        regular_bold:'Poppins_600SemiBold',
         medium:'Poppins_500Medium',
         bold:'Poppins_700Bold'
     }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTheme } from 'styled-components'
+import { Card } from '../components/Card';
 
 import {
   Container,
@@ -9,10 +11,13 @@ import {
 } from './styles';
 
 export function Home(){
+  const theme = useTheme();
   return (
     <Container>
       <Header></Header>
-      <Contents></Contents>
+      <Contents>
+        <Card title="Compras" background={theme.colors.title} />
+      </Contents>
         
     </Container>
   );
