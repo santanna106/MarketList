@@ -1,13 +1,14 @@
 
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import {MaterialIcons} from '@expo/vector-icons'
+import {MaterialIcons} from '@expo/vector-icons';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface ContainerProps {
     background:string;
 }
 
-export const Container = styled.View<ContainerProps>`
+export const Container = styled(RectButton)<ContainerProps>`
     width:90%;
     height: 150px;
     border:1px solid;

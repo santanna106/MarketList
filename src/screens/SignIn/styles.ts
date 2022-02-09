@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
-import { CurrentRenderContext } from '@react-navigation/native';
+
 
 export const Container = styled.View`
     flex:1;
@@ -108,3 +108,5 @@ export const PurchasesCards = styled.ScrollView.attrs({
   
     
 `;
+
+

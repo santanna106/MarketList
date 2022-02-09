@@ -1,4 +1,5 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import {
   Container,
@@ -8,7 +9,7 @@ import {
   Icon
 } from './styles';
 
-interface Props {
+interface Props extends RectButtonProps {
     title:string;
     background:string;
     iconName:string;
@@ -17,10 +18,11 @@ interface Props {
 export function Card({
     title,
     background,
-    iconName
+    iconName,
+    ...rest
 } :Props ){
   return (
-    <Container background={background}>
+    <Container background={background} {...rest}>
       <ContainerLeftWrapper>
         <Title>{title}</Title>
       </ContainerLeftWrapper>
