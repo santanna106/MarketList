@@ -40,7 +40,7 @@ export function TaskRegister(){
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
  
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const theme = useTheme();
 
   const { 
@@ -54,6 +54,10 @@ export function TaskRegister(){
 
   function handleBackButton() {
     navigation.goBack();
+  }
+
+  function handleSubmitButton() {
+    navigation.navigate('TaskList');
   }
 
   return (
@@ -97,7 +101,8 @@ export function TaskRegister(){
                   </WrapperSwitch>
                   
                   <Button background={theme.colors.text_dark}
-                          title="Salvar"      
+                          title="Salvar"   
+                          onPress={handleSubmitButton}   
                   />
                 </Form>
                 
