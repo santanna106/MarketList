@@ -39,10 +39,16 @@ export const Title = styled.Text`
 `;
 
 export const Content = styled.View`
-    height:500px;
+    height:400px;
     width:100%;
     background-color:${({theme}) => theme.colors.background};
 `;
+
+export const DescTask = styled.Text`
+    font-family:${({theme}) => theme.fonts.regular_bold};
+    font-size:${RFValue(15)}px;
+`;
+
 
 
 

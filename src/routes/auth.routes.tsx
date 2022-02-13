@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SignIn } from '../screens/SignIn';
 import { TaskRegister } from '../screens/TaskRegister';
-import { TaskList } from '../screens/TaskList';
+import { Tasks } from '../screens/Tasks';
 
 const { Navigator,Screen } = createNativeStackNavigator();
 
@@ -20,7 +20,7 @@ export function AuthRoutes(){
             />
             <Screen 
                 name="TaskList"
-                component={TaskList}
+                component={Tasks}
             />
         </Navigator>
     )
