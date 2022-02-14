@@ -5,7 +5,9 @@ import { IconButtom } from '../Forms/IconButtom';
 import {
     TaskFlatList,
     TaskWrapper,
-    TaskName
+    TaskName,
+    TitleWrapper,
+    WrapperButton
 } from './styles';
 
 export interface Task{
@@ -43,9 +45,13 @@ export function TaskList({ tasks
         renderItem={({ item }: { item: Task }) =>
             <TaskWrapper>
                   <CheckBox checked={item.done} onPress={() => handleChecked(item.id)}/>
-                  <TaskName>{item.name}</TaskName>
-                  <IconButtom iconType='trash' />
-                  <IconButtom iconType='edit' />
+                  <TitleWrapper>
+                    <TaskName>{item.name}</TaskName>
+                  </TitleWrapper>
+                  <WrapperButton>
+                    <IconButtom iconType='trash' />
+                    <IconButtom iconType='edit' />
+                  </WrapperButton>
             </TaskWrapper>
         }
         />

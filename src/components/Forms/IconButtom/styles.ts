@@ -3,7 +3,7 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const IconRectButton = styled(RectButton)`
     
-    padding: 15px 15px;
+    padding: 0px 5px;
     margin-bottom: 4px;
     border-radius: 4px;
     flex-direction: row;
