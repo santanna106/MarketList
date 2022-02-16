@@ -27,7 +27,7 @@ interface ITaskContextData {
     tasks: Task[];
     insert(task:Task): Promise<void>;
     removeItem(id:string):Promise<void>;
-    all():Promise<void>;
+    all():Promise<Task[]>;
     find(id:string):Promise<void>;
     update(task:Task):Promise<void>;
     removeAll():Promise<void>;
@@ -43,7 +43,14 @@ function TaskProvider({children}:TaskProviderProps){
     
     async function insert(task:Task){
         try{
-            await AsyncStorage.setItem(STORE.task,JSON.stringify(task));    
+           
+            const data = await AsyncStorage.getItem(STORE.task);
+            const currentData = data ? JSON.parse(data) : [];
+            const dataFormatted = [
+                ...currentData,
+                task
+            ];
+            await AsyncStorage.setItem(STORE.task,JSON.stringify(dataFormatted));   
             setTasks(oldTask => [...oldTask,task]);
         }catch (error){
             throw new Error(error as string);
@@ -70,12 +77,16 @@ function TaskProvider({children}:TaskProviderProps){
 
     async function all(){
         try {
+            setTaskStoreIsLoading(true);
             const responseTask =  await AsyncStorage.getItem(STORE.task);
-            const tasks = responseTask ? JSON.parse(responseTask) : [];
-
-            return tasks
+            const tasksAll = responseTask ? JSON.parse(responseTask) : [];
+            setTasks(tasksAll);
+            setTaskStoreIsLoading(false);
+            return tasksAll;
           } catch(error) {
             console.log(error)
+          } finally {
+            setTaskStoreIsLoading(false);
           }
     }
 
@@ -133,7 +144,7 @@ function TaskProvider({children}:TaskProviderProps){
            
            if(taskStoraged) {
                const tasks = JSON.parse(taskStoraged) as Task[];
-               console.log('TASKS: ',tasks);
+              
                setTasks(tasks);
            }
            setTaskStoreIsLoading(false);

@@ -1,6 +1,5 @@
 import React, { useEffect,useState } from 'react';
 import { useTheme } from 'styled-components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 import { useTask } from '../../hooks/task';
@@ -8,8 +7,6 @@ import { useTask } from '../../hooks/task';
 import {
   Container,
   Title,
-  Button,
-  ButtonText,
   Header,
   HeaderCurve,
   HeaderTitle,
@@ -31,39 +28,43 @@ interface TaskData {
 
 
 export function SignIn(){
+  const [countAllTasks,setCountAllTasks] = useState(0);
+  const [countUrgentTasks,setCountUrgentTasks] = useState(0);
+  const [countTasksFinished,setCountTasksFinished] = useState(0);
+
   const theme = useTheme();
   const { tasks } = useTask();
+  
+ 
+ 
 
-  const countAllTasks = tasks.length;
-  const taskUrgents = tasks.map(
-    (e) => {
-      if(e.urgent){
-        return e;
-      }
-    })
 
-  const countUrgentTasks = taskUrgents.length;
-
-  const taskFinished = tasks.map(
-    (e) => {
-      if(e.done){
-        return e;
-      }
-    })
-
-  const countTasksFinished = taskFinished.length;
-
+ 
   const navigation = useNavigation<any>();
 
   function handleAddTask(){
     navigation.navigate('TaskRegister');
   }
 
+  useEffect(() => { 
+    if(tasks.length > 0 ) {
+      const taskUrgents = tasks
+          .filter((e) => e.urgent === true);
+
+      const taskFinished = tasks
+          .filter((e) => e.done === true);
+      
+      setCountAllTasks(tasks.length);
+      setCountUrgentTasks(taskUrgents.length);
+      setCountTasksFinished(taskFinished.length);
+    }
+  },[])
+
   return (
     <Container>
       <Header>
         <HeaderTitle>
-          <Title>My Market List</Title>
+          <Title>Activity List</Title>
         </HeaderTitle>
         <HeaderCurve/>
       </Header>

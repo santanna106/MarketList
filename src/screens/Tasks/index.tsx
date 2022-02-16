@@ -1,6 +1,6 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState,useCallback } from 'react';
 import { useTheme } from 'styled-components';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useFocusEffect } from '@react-navigation/native';
 
 
 import {
@@ -17,19 +17,50 @@ import { BackButton } from '../../components/BackButton';
 import { TaskList } from '../../components/TaskList';
 
 import { useTask } from '../../hooks/task';
+import { ActivityIndicator } from 'react-native';
 
+
+interface Task {
+  id:string;
+  name:string;
+  done:boolean;
+  urgent:boolean;
+  date_start:string;
+  date_finish:string;
+}
 
 export function Tasks(){
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  
+ 
+  const [tasksLoad,setTasks] = useState<Task[]>([]);
+  const [loading,setLoading] = useState(true);
   const navigation = useNavigation();
   const theme = useTheme();
-  const { tasks } = useTask();
+  const { all,taskStoreIsLoading } = useTask();
+
+
+ 
 
   function handleBackButton() {
     navigation.goBack();
   }
+
+
+  async function loadData(){
+    setLoading(true);
+    const data = await all();
+    
+    setTasks(data);
+    setLoading(false);
+  }
+
+
+  useEffect(() => {
+    loadData();
+},[])
+  useFocusEffect(useCallback(() => {
+    loadData();
+    
+ },[]));
 
   return (
     <Container>
@@ -42,11 +73,17 @@ export function Tasks(){
         </WrapperTitle>
        
       </Header>
-      
-      <Content>
-        <TaskList tasks={tasks} />
+      {
+        loading  ?
+          <ActivityIndicator  size={30} color={'#ff0000'} />
+        :
+        <Content>
+         
+          <TaskList tasks={tasksLoad} />
        
-      </Content>
+        </Content>
+      }
+      
     </Container>
   );
 }
