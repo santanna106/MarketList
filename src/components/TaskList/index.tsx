@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { CheckBox } from '../Forms/CheckBox';
-import { IconButtom } from '../Forms/IconButtom';
+import { TaskCard } from '../TaskCard';
 
 import {
     TaskFlatList,
-    TaskWrapper,
     TaskName,
     TitleWrapper,
-    WrapperButton
+    TaskSubtitle
 } from './styles';
 
 export interface Task{
@@ -43,16 +41,12 @@ export function TaskList({ tasks
         data={formattedTask}
         keyExtractor={(item:Task) => String(item.id)}
         renderItem={({ item }: { item: Task }) =>
-            <TaskWrapper>
-                  <CheckBox checked={item.done} onPress={() => handleChecked(item.id)}/>
-                  <TitleWrapper>
-                    <TaskName>{item.name}</TaskName>
-                  </TitleWrapper>
-                  <WrapperButton>
-                    <IconButtom iconType='trash' />
-                    <IconButtom iconType='edit' />
-                  </WrapperButton>
-            </TaskWrapper>
+            <TaskCard>
+              <TitleWrapper>
+                <TaskName>{item.name}</TaskName>
+                <TaskSubtitle>{item.name}</TaskSubtitle>
+              </TitleWrapper>    
+            </TaskCard>
         }
         />
   );

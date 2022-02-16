@@ -4,11 +4,12 @@ import { RectButton } from 'react-native-gesture-handler';
 
 interface ContainerProps {
     background:string;
+    height:string;
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
     width:70%;
-    height:70px;
+    height:${({height}) => height ? height : 70}px;
     border-radius:30px;
     align-items:center;
     justify-content:center;
