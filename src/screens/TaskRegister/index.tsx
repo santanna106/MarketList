@@ -65,7 +65,7 @@ export function TaskRegister(){
     navigation.goBack();
   }
 
-  function handleSubmitButton(form:FormData) {
+  async function handleSubmitButton(form:FormData) {
     try{
       const newTask  = {
         id:String(uuid.v4()),
@@ -75,7 +75,7 @@ export function TaskRegister(){
         date_start:'',
         date_finish: ''
       }
-      insert(newTask);
+      await insert(newTask);
       navigation.navigate('TaskList');
 
     } catch(error){

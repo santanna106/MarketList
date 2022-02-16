@@ -43,7 +43,7 @@ function TaskProvider({children}:TaskProviderProps){
     
     async function insert(task:Task){
         try{
-           
+         
             const data = await AsyncStorage.getItem(STORE.task);
             const currentData = data ? JSON.parse(data) : [];
             const dataFormatted = [

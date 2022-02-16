@@ -18,6 +18,7 @@ import { TaskList } from '../../components/TaskList';
 
 import { useTask } from '../../hooks/task';
 import { ActivityIndicator } from 'react-native';
+import { Load } from '../../components/Load';
 
 
 interface Task {
@@ -57,9 +58,9 @@ export function Tasks(){
   useEffect(() => {
     loadData();
 },[])
+
   useFocusEffect(useCallback(() => {
     loadData();
-    
  },[]));
 
   return (
@@ -75,7 +76,7 @@ export function Tasks(){
       </Header>
       {
         loading  ?
-          <ActivityIndicator  size={30} color={'#ff0000'} />
+          <Load />
         :
         <Content>
          
