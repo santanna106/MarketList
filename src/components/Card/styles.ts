@@ -28,24 +28,26 @@ export const ContainerRightWrapper = styled.View`
 `;
 
 export const ContainerLeftWrapper = styled.View`
+    flex-direction:column;
+
     width:50%;
     align-items:center;
     justify-content:center;
-    
 `;
 
 export const Title = styled.Text`
     color:${({theme}) => theme.colors.title};
     font-family:${({theme}) => theme.fonts.medium};
     font-size:${RFValue(25)}px;
+`;
 
-    
+export const LabelQtd = styled.Text`
+    color:${({theme}) => theme.colors.title};
+    font-family:${({theme}) => theme.fonts.medium};
+    font-size:${RFValue(20)}px;
 `;
 
 export const Icon = styled(MaterialIcons)`
     font-size:${RFValue(100)}px;
     margin-right:12px;
-    
-
-    
 `;

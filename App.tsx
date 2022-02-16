@@ -19,6 +19,7 @@ import {
 
 import theme from './src/global/styles/theme'
 import {AuthProvider, useAuth} from './src/hooks/auth';
+import { TaskProvider,useTask } from './src/hooks/task';
 
 
 export default function App() {
@@ -29,9 +30,10 @@ export default function App() {
     Poppins_700Bold
   });
 
-  const {userStoreIsLoading} = useAuth();
+  const { userStoreIsLoading } = useAuth();
+  const { taskStoreIsLoading } = useTask();
 
-  if(!fontsLoaded || userStoreIsLoading){
+  if(!fontsLoaded || userStoreIsLoading || taskStoreIsLoading){
     return  <AppLoading />
   }
 
@@ -40,7 +42,9 @@ export default function App() {
       <ThemeProvider theme={theme}>
           <StatusBar barStyle="dark-content"  backgroundColor={theme.colors.primary} />
           <AuthProvider>
-            <Routes />
+            <TaskProvider>
+              <Routes />
+            </TaskProvider>
           </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

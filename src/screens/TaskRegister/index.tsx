@@ -3,7 +3,7 @@ import {
    KeyboardAvoidingView,
    TouchableWithoutFeedback,
    Keyboard, 
-   
+   Alert
  } from 'react-native';
 
 import { Button } from '../../components/Button';
@@ -11,9 +11,10 @@ import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import uuid from 'react-native-uuid';
 
 import { useForm } from 'react-hook-form';
-;
+import { useTask } from '../../hooks/task';
 
 import {
   Container,
@@ -30,6 +31,11 @@ import { InputForm } from '../../components/Forms/InputForm';
 import { Switch } from 'react-native';
 import { BackButton } from '../../components/BackButton';
 
+interface FormData {
+  name:string;
+  urgent: boolean;
+}
+
 const schema = Yup.object().shape({
   name: Yup
       .string()
@@ -37,11 +43,14 @@ const schema = Yup.object().shape({
 })
 
 export function TaskRegister(){
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [urgent, setUrgent] = useState(false);
+  const toggleSwitch = () => setUrgent(previousState => !previousState);
  
   const navigation = useNavigation<any>();
   const theme = useTheme();
+
+  const { insert } = useTask();
+
 
   const { 
     control,
@@ -56,8 +65,22 @@ export function TaskRegister(){
     navigation.goBack();
   }
 
-  function handleSubmitButton() {
-    navigation.navigate('TaskList');
+  function handleSubmitButton(form:FormData) {
+    try{
+      const newTask  = {
+        id:String(uuid.v4()),
+        name:form.name,
+        done:false,
+        urgent:urgent,
+        date_start:'',
+        date_finish: ''
+      }
+      insert(newTask);
+      navigation.navigate('TaskList');
+
+    } catch(error){
+      Alert.alert('Ops! Erro ao tentar gravar o registro.');
+    }
   }
 
   return (
@@ -92,17 +115,17 @@ export function TaskRegister(){
                     <LibleSwitch>Urgente</LibleSwitch>
                     <Switch
                         trackColor={{ false: theme.colors.title, true: theme.colors.attention }}
-                        thumbColor={isEnabled ? theme.colors.attention : theme.colors.background}
+                        thumbColor={urgent ? theme.colors.attention : theme.colors.background}
                         
                         onValueChange={toggleSwitch}
-                        value={isEnabled}
+                        value={urgent}
                         style={{ transform: [{ scaleX: 2.0  }, { scaleY: 2.0  }],marginBottom:20,paddingLeft:8 }}
                       />
                   </WrapperSwitch>
-                  
+                
                   <Button background={theme.colors.text_dark}
                           title="Salvar"   
-                          onPress={handleSubmitButton}   
+                          onPress={handleSubmit(handleSubmitButton)}
                   />
                 </Form>
                 

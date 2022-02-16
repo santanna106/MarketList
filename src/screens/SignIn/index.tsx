@@ -3,6 +3,8 @@ import { useTheme } from 'styled-components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
+import { useTask } from '../../hooks/task';
+
 import {
   Container,
   Title,
@@ -30,28 +32,33 @@ interface TaskData {
 
 export function SignIn(){
   const theme = useTheme();
-  const [loading,setLoading] = useState(true);
-  const [listTask,setListTask] = useState<TaskData[]>([]);
+  const { tasks } = useTask();
+
+  const countAllTasks = tasks.length;
+  const taskUrgents = tasks.map(
+    (e) => {
+      if(e.urgent){
+        return e;
+      }
+    })
+
+  const countUrgentTasks = taskUrgents.length;
+
+  const taskFinished = tasks.map(
+    (e) => {
+      if(e.done){
+        return e;
+      }
+    })
+
+  const countTasksFinished = taskFinished.length;
+
   const navigation = useNavigation<any>();
-  
-  async function loadData(){       
-    setLoading(true);    
-    const response = await AsyncStorage.getItem(STORE.task);
-    const responseFormatted = response ? JSON.parse(response) : [];
-
-
-    setListTask(responseFormatted);
-    setLoading(false);
-  }
 
   function handleAddTask(){
     navigation.navigate('TaskRegister');
   }
 
-
-  useEffect(() => {
-    loadData();
-  },[])
   return (
     <Container>
       <Header>
@@ -63,9 +70,27 @@ export function SignIn(){
       <Contents>
         <PurchasesTypeBox>
           <PurchasesCards>
-            <Card title="Todas" background={theme.colors.secundary} iconName="fact-check"  onPress={() => alert('Todas')}/>
-            <Card title="Urgentes" background={theme.colors.attention} iconName="warning" onPress={() => alert('Todas')}/>
-            <Card title="Realizadas" background={theme.colors.sucess} iconName="check-box" onPress={() => alert('Todas')}/>
+            <Card
+              title="Todas" 
+              background={theme.colors.secundary}
+              iconName="fact-check"
+              onPress={() => alert('Todas')}
+              count={countAllTasks}
+            />
+            <Card
+              title="Urgentes"
+              background={theme.colors.attention}
+              iconName="warning"
+              onPress={() => alert('Todas')}
+              count={countUrgentTasks}
+             />
+            <Card
+              title="Realizadas"
+              background={theme.colors.sucess}
+              iconName="check-box"
+              onPress={() => alert('Todas')}
+              count={countTasksFinished}
+            />
           </PurchasesCards>
         </PurchasesTypeBox>
         

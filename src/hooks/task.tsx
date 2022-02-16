@@ -8,8 +8,6 @@ import React,
      } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SimpleTask } from 'react-native';
-
 import { STORE } from '../const/store';
 
 interface TaskProviderProps {
@@ -31,14 +29,10 @@ interface ITaskContextData {
     removeItem(id:string):Promise<void>;
     all():Promise<void>;
     find(id:string):Promise<void>;
-    update(task:SimpleTask):Promise<void>;
+    update(task:Task):Promise<void>;
+    removeAll():Promise<void>;
     taskStoreIsLoading:boolean;
 }
-
-/*
-   const response =  await AsyncStorage.getItem(dataKey);
-   const transaction = response ? JSON.parse(response) : [];
-*/
 
 const TaskContext = createContext({} as ITaskContextData);
 
@@ -49,7 +43,8 @@ function TaskProvider({children}:TaskProviderProps){
     
     async function insert(task:Task){
         try{
-            await AsyncStorage.setItem(STORE.task,JSON.stringify(task));      
+            await AsyncStorage.setItem(STORE.task,JSON.stringify(task));    
+            setTasks(oldTask => [...oldTask,task]);
         }catch (error){
             throw new Error(error as string);
         }
@@ -73,29 +68,99 @@ function TaskProvider({children}:TaskProviderProps){
         }
     }
 
+    async function all(){
+        try {
+            const responseTask =  await AsyncStorage.getItem(STORE.task);
+            const tasks = responseTask ? JSON.parse(responseTask) : [];
+
+            return tasks
+          } catch(error) {
+            console.log(error)
+          }
+    }
+
+    async function find(id:string){
+        try{
+            let tasksJSON= await AsyncStorage.getItem(STORE.task);
+            let tasksArray = JSON.parse(tasksJSON);
+
+            let taskFound = tasksArray.filter(function(e){
+                return e.id === id;
+            });
+
+            return taskFound[0];
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    async function update(task:Task){
+        try{
+            let tasksJSON= await AsyncStorage.getItem(STORE.task);
+            let tasksArray = JSON.parse(tasksJSON);
+
+            let newListTask = tasksArray.filter(function(e){
+                if(e.id === task.id){
+                    return task;
+                } else {
+                    return e;
+                }
+            });
+
+            setTasks(newListTask);
+            await AsyncStorage.setItem(STORE.task, JSON.stringify(newListTask));
+           
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    async function removeAll(){
+        try {
+            await AsyncStorage.removeItem(STORE.task);
+          } catch(error) {
+            console.log(error)
+          }
+    }
+
     useEffect(() => {
        async function loadUserStorageDate() {
-           setUserStoreIsLoading(true);
-           const userStoraged = await AsyncStorage.getItem(userStorageKey);
-
-           if(userStoraged) {
-               const userLogged = JSON.parse(userStoraged) as User;
-               setUser(userLogged);
+           setTaskStoreIsLoading(true);
+           
+           const taskStoraged = await AsyncStorage.getItem(STORE.task);
+           
+           if(taskStoraged) {
+               const tasks = JSON.parse(taskStoraged) as Task[];
+               console.log('TASKS: ',tasks);
+               setTasks(tasks);
            }
-           setUserStoreIsLoading(false);
+           setTaskStoreIsLoading(false);
        }
 
        loadUserStorageDate();
     }, [])
 
     return (
-        <AuthContext.Provider value={{
-            user,
-            signInWithGoogle,
-            signOut,
-            userStoreIsLoading
+        <TaskContext.Provider value={{
+            tasks,
+            insert,
+            removeItem,
+            all,
+            find,
+            update,
+            removeAll,
+            taskStoreIsLoading
         }}>
             {children}
-        </AuthContext.Provider>
+        </TaskContext.Provider>
     )
 }
+
+function useTask(){
+    const context = useContext(TaskContext);
+    return context;
+}
+
+export {TaskProvider,useTask}

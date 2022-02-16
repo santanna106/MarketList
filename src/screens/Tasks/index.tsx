@@ -16,6 +16,8 @@ import {
 import { BackButton } from '../../components/BackButton';
 import { TaskList } from '../../components/TaskList';
 
+import { useTask } from '../../hooks/task';
+
 
 export function Tasks(){
   const [isEnabled, setIsEnabled] = useState(false);
@@ -23,22 +25,7 @@ export function Tasks(){
   
   const navigation = useNavigation();
   const theme = useTheme();
-
-  const tasks = [
-    {id:'01',name:'tarefa-01',done:true,urgent:false},
-    {id:'02',name:'tarefa-02',done:false,urgent:true},
-    {id:'03',name:'tarefa-03',done:true,urgent:false},
-    {id:'04',name:'tarefa-04',done:false,urgent:true},
-    {id:'05',name:'tarefa-05',done:true,urgent:false},
-    {id:'06',name:'tarefa-06',done:true,urgent:false},
-    {id:'07',name:'tarefa-07',done:true,urgent:false},
-    {id:'08',name:'tarefa-08',done:true,urgent:false},
-    {id:'09',name:'tarefa-09',done:true,urgent:false},
-    {id:'10',name:'tarefa-10',done:true,urgent:false},
-
-
-  ];
-
+  const { tasks } = useTask();
 
   function handleBackButton() {
     navigation.goBack();

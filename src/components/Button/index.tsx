@@ -15,6 +15,7 @@ export function Button({
     background,
     title,
     ...rest
+    
 } :Props){
   return (
     <Container background={background} {...rest}>
