@@ -10,7 +10,7 @@ interface TaskWrapperProps extends PressableProps {
 
 export const TaskFlatList = styled(FlatList as new(props: FlatListProps<Task>)  => FlatList<Task> ).attrs({
     contentContainerStyle : {
-       padding: 10
+       paddingTop: 15
     },
     showsVerticalScrollIndicator: false
  })`
@@ -18,16 +18,16 @@ export const TaskFlatList = styled(FlatList as new(props: FlatListProps<Task>)  
  `;
 
 export const TitleWrapper = styled.View`
-flex:1;
+
 width:100%;
 flex-direction:column;
 align-items:flex-start;
-justify-content:flex-start;
-
 `;
 
 export const TaskName = styled.Text`
-    font-size:${RFValue(30)}px;
+    font-size:${RFValue(25)}px;
+    
+    height: 30px;
     font-family:${({theme}) => theme.fonts.regular};
     padding-left:10px;
 `;

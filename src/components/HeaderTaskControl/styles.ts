@@ -5,7 +5,7 @@ export const Container = styled.View`
     flex-direction:row;
 
     width:100%;
-    background-color:#FF0000;
+   
     height:60px;
 
     justify-content:space-between;
@@ -19,7 +19,16 @@ export const WrapperCrudButton = styled.View`
     justify-content:flex-end;
      
     width:60%;
-    background-color:#0ff;
+    
 
     height:60px;
+`;
+
+
+export const SearchField = styled.TextInput`
+    width:97%;
+   
+    background-color:${({theme}) => theme.colors.background};
+    height:60px;
+    border-radius:80px;
 `;

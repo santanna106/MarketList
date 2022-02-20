@@ -70,15 +70,8 @@ export function Tasks(){
     <Container>
       <Header>
         {
-          visible &&
-            <HeaderTaskControl />
+            <HeaderTaskControl isSearch={visible}/>
         }
-        
-       
-        <WrapperTitle>
-          <Title>Lista de Atividades </Title>
-        </WrapperTitle>
-       
       </Header>
       {
         loading  ?

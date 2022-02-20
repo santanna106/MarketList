@@ -2,16 +2,17 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
-    height:800px;
+    flex:1;
     width:100%;
     background-color:${({theme}) => theme.colors.primary};
 `;
 
 
 export const Header = styled.View`
-
+    flex:1;
+    height:60px;
     width:100%;
-    margin-top:50px;
+    margin-top:25px;
     padding-left:10px;
     flex-direction:column;
 `;
@@ -39,7 +40,7 @@ export const Title = styled.Text`
 `;
 
 export const Content = styled.View`
-    height:400px;
+    flex:7;
     width:100%;
     background-color:${({theme}) => theme.colors.background};
 `;

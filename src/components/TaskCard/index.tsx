@@ -7,10 +7,14 @@ import {
 import { useHeader } from '../../hooks/header';
 
 interface Props {
+  id:string;
   children:ReactNode;
 }
 
-export function TaskCard({ children } : Props){
+export function TaskCard({ 
+  id,
+  children
+ } : Props){
 
   const [ pressed,setPressed ] = useState(false);
   const [ click,setClick ] = useState(false);
@@ -19,12 +23,13 @@ export function TaskCard({ children } : Props){
 
   function toogleLogPress(){
     setPressed(!pressed);
+    alert(id);
     toogleVisible();
   }
 
   function toogleOnPress(){
-    alert('Clicou')
     setClick(!click);
+    
     
   }
 

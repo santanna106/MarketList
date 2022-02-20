@@ -44,7 +44,7 @@ export function TaskList({
         data={formattedTask}
         keyExtractor={(item:Task) => String(item.id)}
         renderItem={({ item }: { item: Task }) =>
-            <TaskCard>
+            <TaskCard id={item.id}>
               <TitleWrapper>
                 <TaskName>{item.name}</TaskName>
                 <TaskSubtitle>{item.name}</TaskSubtitle>

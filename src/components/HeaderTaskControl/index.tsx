@@ -4,30 +4,48 @@ import { useTheme } from 'styled-components';
 
 import {
   Container,
-  WrapperCrudButton
+  WrapperCrudButton,
+  SearchField
 } from './styles';
 
-export function HeaderTaskControl(){
+interface Props{
+  isSearch:boolean;
+}
+
+export function HeaderTaskControl({
+  isSearch
+}:Props){
   const theme = useTheme();
   return (
     <Container>
-        <IconButton 
-           color={theme.colors.text_dark}
-           nameIcon={'arrow-back'} 
-           
-        />
-        <WrapperCrudButton>
+      {
+        isSearch ?
+          <SearchField />
+        :
+        <>
           <IconButton 
             color={theme.colors.text_dark}
-            nameIcon={'ios-create-outline'} 
+            nameIcon={'arrow-back'} 
             
           />
+          <WrapperCrudButton>
             <IconButton 
-            color={theme.colors.text_dark}
-            nameIcon={'ios-trash-outline'} 
-            
-          />
-        </WrapperCrudButton>
+              color={theme.colors.text_dark}
+              nameIcon={'ios-create-outline'} 
+              onPress={() => alert('Update')}
+              
+            />
+              <IconButton 
+              color={theme.colors.text_dark}
+              nameIcon={'ios-trash-outline'} 
+              onPress={() => alert('Remove')}
+              
+            />
+          </WrapperCrudButton>
+        </>
+
+      }
+        
     </Container>
   );
 }
