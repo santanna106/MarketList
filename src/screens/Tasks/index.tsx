@@ -20,6 +20,9 @@ import { useTask } from '../../hooks/task';
 import { ActivityIndicator } from 'react-native';
 import { Load } from '../../components/Load';
 
+import { HeaderTaskControl } from '../../components/HeaderTaskControl';
+
+import { useHeader } from '../../hooks/header';
 
 interface Task {
   id:string;
@@ -38,7 +41,7 @@ export function Tasks(){
   const theme = useTheme();
   const { all,taskStoreIsLoading } = useTask();
 
-
+  const { visible } = useHeader();
  
 
   function handleBackButton() {
@@ -66,9 +69,12 @@ export function Tasks(){
   return (
     <Container>
       <Header>
-        <WrapperBackButton>
-         <BackButton onPress={handleBackButton}  color={theme.colors.text_dark}/>
-        </WrapperBackButton>
+        {
+          visible &&
+            <HeaderTaskControl />
+        }
+        
+       
         <WrapperTitle>
           <Title>Lista de Atividades </Title>
         </WrapperTitle>

@@ -20,6 +20,7 @@ import {
 import theme from './src/global/styles/theme'
 import {AuthProvider, useAuth} from './src/hooks/auth';
 import { TaskProvider,useTask } from './src/hooks/task';
+import { HeaderProvider } from './src/hooks/header';
 
 
 export default function App() {
@@ -43,7 +44,9 @@ export default function App() {
           <StatusBar barStyle="dark-content"  backgroundColor={theme.colors.primary} />
           <AuthProvider>
             <TaskProvider>
-              <Routes />
+              <HeaderProvider>
+                <Routes />
+              </HeaderProvider>
             </TaskProvider>
           </AuthProvider>
       </ThemeProvider>

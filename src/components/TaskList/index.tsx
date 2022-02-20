@@ -17,9 +17,12 @@ export interface Task{
 
 export interface Props {
     tasks: Task[];
+    
 }
 
-export function TaskList({ tasks 
+export function TaskList({ 
+  tasks,
+ 
 } : Props){
 
   const [formattedTask,setFormattedTask] = useState<Task[]>(tasks);
